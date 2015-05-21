@@ -1,0 +1,534 @@
+---
+title: Welcome to Middleman
+---
+%textarea#source
+  :preserve
+    class: middle, center, inverse
+    # Introduction to Mapping with d3
+    Mila Frerichs
+
+    ---
+    layout: true
+    .footer[
+      <img src="/images/logo.png" height="20" />
+      .what[Mila Frerichs, Mapping in D3, FOSSGIS 2015]
+    ]
+    
+    ---
+
+    # Agenda
+
+    1. Introduction
+
+    --
+    2. Challenge Overview
+
+    --
+    3. Lessons Learned
+
+    --
+    4. Outcome
+
+    ---
+    class: center, middle
+    # Introduction
+    ## Who are you?
+    --
+
+    ## What do you expect?
+    ---
+    # Introduction
+    Download Workshop files. Use the link "Workshop Installation" on your desktop.  
+    Run the install.sh script. Password is user.  
+    Visit http://localhost/d3/ on your browser  
+
+    --
+
+    Each challenge consists:
+
+    - a Walkthrough by me (5-10 min)
+    --
+
+    - you working on the challenge (inlcudes up to two tasks) (15 min)
+    --
+
+    - a debrief where you show your solutions and I show you a possible one(10 min)
+
+    --
+
+    ## Files
+    the files are on your desktop and have a symlink into the local server directory
+    ---
+    # How to show solutions?
+    ### Blocks for the resuce
+    http://bl.ocks.org  
+    a gist based simple viewer for examples  
+    Create a [Gist](http://gist.github.com/) and use the id and your username for bl.ocks.org  
+    #### An example
+    http://bl.ocks.org/mbostock/c1c0426d50ca8a9f4c97
+    ---
+    # Challenge Overview
+    Challenges are in the folders with their appropriate name
+    each challenge has 
+    - challenge.js
+    - solution.js 
+    - index.html
+    - Readme.
+    ---
+    # Challenges
+    ## Three main challenges
+    - Simple Map
+    - Change Projection
+    - Add Interaction
+
+    --
+
+    ## two extra challenges
+    - Chorolplet Map
+    - label placement
+    ---
+    class: center, middle
+    ### Let's get started
+    ---
+    class: center, middle
+    # Challenge 1
+    ## A simple Map
+    Folder `challenge1`
+    ---
+    # Selections
+    ## Select a single element
+    ```js
+    var map=d3.select('#map');
+    ```
+    Select the element with the id 'map'
+    --
+
+    ## Select multiple elements
+    ```js
+    var groups=d3.selectAll('.country');
+    ```
+    Select all elements with the class country
+    ---
+    # Selections
+    <img src="/images/selections.png" width="100%" />
+    ---
+    # Selections
+    ## Data
+    ```js
+    data = ['a','c','e','g'];
+    selection = d3.selectAll('.country').data(data);
+    ```
+    ---
+    # Selections
+    ## enter()
+    If the data object has no DOM element in the selection, then it’s considered an “enter”
+    --
+
+    ## exit()
+    If that data object is no longer present in the data set, it’s considered an “exit”
+    --
+
+    ## update
+    If the data object exists both in the data set and as a property of a DOM node in the selection, it’s considered an “update”.
+    ---
+    # Challenge 1
+    ## A simple Map
+    ```js
+    var countries=d3.select('svg g');
+    ```
+    Select the first group(g) inside the svg
+    --
+
+    ```js
+    countries.selectAll('.country')
+    ```
+    Select all elements with class 'country' inside countries (group inside svg)
+    --
+
+    ```js
+    .data(geojson.features).enter().append('path')
+    ```
+    Select the appropriate element, enter the selection and add path elements
+    ---
+    # Challenge 1
+    ## A simple Map
+    ```js
+    .attr("d", path)
+    ```
+    --
+    or
+    ```js
+    .attr("d", function(d) { return path(d); }
+    ```
+    Add the d attribute and apply the result of the path function
+    --
+
+    ## Add a class
+    ```js
+    .attr('class','classname')
+    ```
+    add a class with the name 'classname'
+    ---
+    # Challenge 1
+    ## A simple Map - using topojson
+    way faster for big data
+    ```js
+    .data(topojson.feature(data, data.objects.europe).features)
+    ```
+    > Returns the GeoJSON Feature or FeatureCollection for the specified object in the given topology. If the specified object is a GeometryCollection, a FeatureCollection is returned, and each geometry in the collection is mapped to a Feature. Otherwise, a Feature is returned.
+    ---
+    class: center, middle
+    ### Now it's your turn!
+    ---
+    class: center
+    ## Debrief
+    ### Show your solutions
+    --
+
+    ### Where do you got stuck?
+    --
+
+    ### fun/hard/frustrating parts?
+    ---
+    class: middle
+    # Solution Challenge 1
+    ```js
+    d3.json("data/eu.json", function(data) {
+      countries.selectAll('.country')
+      .data(topojson.feature(data, data.objects.europe).features)
+      .enter()
+      .append('path')
+      .attr('class', 'country')
+      .attr('d', path);
+    });
+    ```
+    or
+    ```js
+    d3.json("data/eu.geojson", function(data) {
+      countries.selectAll('.country')
+      .data(data.features)
+      .enter()
+      .append('path')
+      .attr('class', 'country')
+      .attr('d', path);
+    });
+    ```
+    ---
+    class: center, middle
+    # Challenge 2
+    ## Change the Projection
+    ---
+    # Projections in D3
+    ## plenty different choices
+    --
+
+    - Mercator
+    --
+
+    - Albert
+    --
+
+    - Natural Earth
+    - ..  
+
+    More infos here:
+    https://github.com/d3/d3-geo-projection
+    ---
+    # Projections
+    ```js
+    d3.geo.mercator()
+    ```
+    ## Parameters
+    parameter|explanation
+    -------|------
+    scale|projection’s scale factor to the specified value
+    translate|projection’s translation offset to the specified two-element array [x, y]
+    center|the center of the projection
+    ---
+    # Projections
+    ## Default parameters
+    parameter|value
+    -------|------
+    scale|150
+    translate|[480, 250]
+    center|defaults to ⟨0°,0°⟩
+    ---
+    # Projections
+    ## Best practice
+    use a scale that best fits your zoom level  
+    use half width and half height for translate  
+    center the map for your purpose  
+    ---
+    # Satellite Projection
+    ## Tips & Tricks
+    important parameters
+
+    parameter|description|default
+    ----|----
+    rotate|longitude, latitude and roll in degrees|[0, 0, 0]
+    distance|distance above the sphere’s surface|1.4
+    tilt|tilt angle in degrees|0
+    ???
+    default flipped y-coordinate
+    ---
+    # Rotation
+    http://bl.ocks.org/mbostock/raw/4282586/
+    ---
+    # Challenge 2
+    ## Change the projection
+    ### Task 1: Natural Earth projection
+
+    --
+    ### Task 2: Satellite projection
+    ---
+    class: center, middle
+    ### Now it's your turn!
+    ---
+    class: center
+    ## Debrief
+    ### Show your solutions
+    --
+
+    ### Where do you got stuck?
+    --
+
+    ### fun/hard/frustrating parts?
+    ---
+    # Challenge 2
+    ## Solution Task 1
+    ```js
+    width = 300;
+    center = [5, 70];
+    scale = 600;
+    projection = d3.geo.naturalEarth().scale(scale).translate([width / 2, 0]).center(center);
+    ```
+    ---
+    # Challenge 2
+    ## Solution Task 2
+    ```js
+    scale = 550;
+    distance = 1.1;
+    rotate = [7, -50.3849401, -55];
+    tilt = 20;
+    projection = d3.geo.satellite().translate([width / 2, 0]).distance(distance).scale(scale).rotate(rotate).tilt(tilt);
+    ```
+    ---
+    class: middle, center
+    # Challenge 3
+    ## Add interaction
+    ---
+    # Interactions
+    - mouseover
+    --
+
+    - mouseout  
+    --
+
+    - mousemove  
+    --
+
+    - click
+    --
+
+    - doubleclick
+    --
+
+    - etc
+
+    Any DOM event type supported by your browser may be used.
+
+    --
+
+    ## Usage
+    ```js
+    d3.select('element').on('mouseover', function(d,i) { return this; });
+    ```
+    d is the datum associated with the element, i is the index and this is the element itself
+    ---
+    # Interactions - Helper Methods
+    ### classed()
+    > This operator is a convenience routine for setting the "class" attribute
+
+    ```js
+    d3.select('.element').classed('active', true)
+    d3.select('.element').classed('active', false)
+    ```
+    ???
+    Das fügt nur eine Klasse hinzu!!
+    --
+
+    ### d3.event
+    ```js
+    d3.event.pageX
+    d3.event.pageY
+    ```
+    ---
+    # Tooltips
+    ## Tips & Tricks
+    Add a element to the body and position it absolute
+    use d3.event.pageX to use mouseposition to position the element
+    ```js
+    .on("mousemove", function(d) {
+      d3.select("#tooltip").style("left", (d3.event.pageX + 10) + "px")
+      .style("top", (d3.event.pageY - 20) + "px")
+    })
+    .on("mouseover", function(d) {
+      d3.select("#tooltip").html(d).style("opacity",1)
+    });
+    ```
+    ---
+    # Challenge 3
+    ## Add interactions
+    ### Task 1: Highlight current country
+    --
+
+    ### Task 2: Display tooltip
+    ---
+    class: center, middle
+    ### Now it's your turn!
+    ---
+    class: center
+    ## Debrief
+    ### Show your solutions
+    --
+
+    ### Where do you got stuck?
+    --
+
+    ### fun/hard/frustrating parts?
+    ---
+    # Challenge 3
+    ## Solution Task 1
+    ```js
+    .on('mouseover', function(d) {
+      return d3.select(this).classed("active", true);
+    }).on('mouseout', function(d) {
+      return d3.select(this).classed("active", false);
+    });
+    ```
+    ```css
+    .country.active {
+      fill: #f00;
+    }
+    ```
+
+    ---
+    # Challenge 3
+    ## Solution Task 2
+    ```js
+    .on("mousemove", function(d) {
+      d3.select("#tooltip").style("left", (d3.event.pageX + 10) + "px")
+      .style("top", (d3.event.pageY - 20) + "px")
+    })
+    .on("mouseover", function(d) {
+      d3.select("#tooltip").html(d.properties.name).style("opacity",1)
+    });
+    ```
+
+
+    ---
+    class: middle, center
+    # Lessons Learned
+    ---
+    class: middle, center
+    # Outcome
+    ---
+    class: middle, center
+    # Extra Challenges
+    ---
+    class: middle, center
+    # Challenge 4
+    ## Choroplet Map
+    ---
+    class: center, middle
+    # Idea
+    fill the polygons with a color
+    use scales to find the correct color for the data
+    ---
+    # Scales
+    ```js
+    d3.scale.quantile()
+    ```
+    https://github.com/mbostock/d3/wiki/Quantitative-Scales#quantile-scales
+    ## Example
+    ```js
+    var domain = [1,2,3,4,5];
+    var range = ['red','green','blue','yellow','magenta'];
+    scale = d3.scale.quantile().domain(domain).range(range);
+    scale(1);
+    # => "red"
+    scale(3)
+    # => 'blue'
+    ```
+    ---
+    # Colors
+    ## Colorbrewer
+    ```js
+    colors = colorbrewer.Reds[8]
+    # => ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#99000d"]
+    ```
+    ---
+    # Styles
+    ```js
+    d3.select('element').attr('fill','#ffffff')
+    d3.select('element').attr('stroke','#ffffff')
+    ```
+    ---
+    # Helpers
+    ## max/min
+    ```js
+    d3.max(data, function(d) { return d.count; });
+    # => 0 (number)
+    d3.min(data, function(d) { return d.count; });
+    # => 0 (number)
+    ```
+    ## extend
+    ```js
+    d3.extend(data, function(d) { return d.count; });
+    # => [min,max]
+    ```
+    ---
+    class: center, middle
+    ### Now it's your turn!
+    ---
+    class: middle, center
+    # Challenge 5
+    ## Label placement
+    ---
+    class: center, middle
+    # Idea
+    add a text field to the map and center the label inside the polygon
+    ---
+    # Text
+    ```js
+    .append("text")
+    .text("Text")
+    ```
+    --
+
+    # Centroid
+    > Computes the projected centroid (in pixels) for the specified feature.
+
+    ```js
+    path.centroid(d)
+    # => 300,40
+    ```
+    ---
+    # Transform
+    most important transformation for d3: translate
+    > This transform specifies a translation by x and y. If y is not provided, it is assumed to be zero.
+
+    ```js
+    .attr("transform", "translate(10,10)")
+    ```
+    ---
+    class: center, middle
+    ### Now it's your turn!
+    ---
+    class: center, middle
+    # Thanks
+
+
+
+
+
