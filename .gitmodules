@@ -1,0 +1,4 @@
+[submodule "presentation/build"]
+	path = presentation/build
+	url = https://github.com/CivicVision/mapping_in_d3.git
+	branch = gh-pages
