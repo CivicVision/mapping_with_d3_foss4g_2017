@@ -1,4 +1,0 @@
-[submodule "presentation_fossgis_2015"]
-	path = presentation_fossgis_2015
-	url = https://github.com/CivicVision/mapping_with_d3_fossgis2015.git
-	branch = gh-pages
