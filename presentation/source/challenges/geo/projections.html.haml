@@ -1,0 +1,20 @@
+---
+layout: landingpage
+title: Workshop Mapping with D3 - Challenges - D3 Geo - Projections
+---
+.login-required
+%div(id="landingpage")
+  %section.sub-heading
+    .content-wrapper
+
+      %h1 Projections
+      :markdown
+        D3 has a very good selection of projections. 
+        A projection is just a function that takes an array of latitude and longitude and returns a new array in (typically) pixels `[x,y]`
+
+        There are four important parameters you can change scale (Scale factor of the projection), `center` (Projection center [longitude, latitude]) `translate` (Pixel [x,y] location of the projection center), `rotate` (Rotation of the projection `[lambda, phi, gamma]` (or `[yaw, pitch, roll]`))
+
+        Here is a map where you can play with the projections.
+      %a(class="jsbin-embed" href="http://jsbin.com/viyadow/embed?output") D3 Selection on jsbin.com
+      = partial "partials/excercises", locals: {excercises: data.excercises.geo.projection.excercises }
+      = link_to "Next challenge", "/challenges/geo/elements", class: 'cta-btn'

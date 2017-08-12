@@ -1,0 +1,11 @@
+- excercises.each_with_index do |excercise,i|
+  %h3= "Excercise #{i+1}"
+  :markdown
+    #{excercise.challenge}
+  - if excercise.bin
+    %a(class="jsbin-embed" href="http://jsbin.com/#{excercise.bin}/embed?html,js,output") Challenge
+  %a.show-solution(href="javascript:;" data-id="solution-#{i}") Show solution
+  .solution.hidden(id="solution-#{i}")
+    :code
+      # lang: js
+      #{excercise.solution}

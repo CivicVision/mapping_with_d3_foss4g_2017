@@ -1,0 +1,62 @@
+selection: &selection
+  title: Selection
+  url: selection
+  next: &attributes
+  excercises:
+    - title: Excercise
+      challenge: Select the `body` of the page
+    - title: Excercise
+      challenge: Select one `h1` element
+    - title: Excercise
+      challenge: |
+        Select one h1 element with the class `headlines`
+    - title: Excercise
+      challenge: |
+        Select all `h1` elements with the class `headlines`
+attributes: &attributes
+  title: Attributes
+  url: attributes
+  excercises:
+    - title: Excercise
+      challenge: Replace the h1 with your own text
+    - title: Excercise
+      challenge: Change the color of the h1
+
+data: &data
+  title: Data
+  url: data
+  excercises:
+    - title: Excercise
+      challenge: |
+        Create a list with names from the data.
+      bin: wulitep
+      solution: |
+
+        var lis = d3.select('ul.names').selectAll('li').data(data);
+        lis.enter().append('li')
+        .merge(lis).html(function(d) {
+          return ("Name: "+d.name+" ("+d.gender+"), "+d.age); 
+        });
+    - title: Excercise
+      challenge: |
+        Create __three__ circles which don't overlap. Fill the existing one with green and the rest red.  
+
+        __Help:__
+
+        r is the radius, cx is the x coordinate from the center and cy is the y coordinate from the center  
+        https://www.w3schools.com/graphics/svg_circle.asp
+      bin: cibokup
+      solution: |
+        var circles = d3.select('svg').selectAll('circle').data(data);
+        circles.attr('fill', 'green');
+        circles.enter().append('circle').attr('fill', 'red')
+        .merge(circles)
+        .attr('cx', function(d,i) { return d;})
+        .attr('cy', function(d,i) { return 10*(i+1);})
+        .attr('r', 5);
+
+
+structure:
+  - *selection
+  - *attributes
+  - *data

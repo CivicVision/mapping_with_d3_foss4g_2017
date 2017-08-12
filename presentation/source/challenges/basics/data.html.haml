@@ -1,0 +1,38 @@
+---
+layout: landingpage
+title: Workshop Mapping with D3 - Challenges - D3 Basics
+---
+.login-required
+%div(id="landingpage")
+  %section.sub-heading
+    .content-wrapper
+      %h1 Basics
+
+      %h2 Adding or removing elements
+
+      :code
+        # lang: js
+        d3.selectAll('h1').data(1,2,3])
+        d3.selectAll('h1').data(1,2,3]).enter()
+        d3.selectAll('h1').data(1,2,3]).exit()
+        d3.selectAll('h1').data(1,2,3]).enter().append('h1')
+        d3.selectAll('h1').data(1,2,3]).exit().remove()
+
+      :markdown
+        This is the toughest part to grasp. But it is very important one for d3.
+
+        The concept is as follows:
+
+        - You select elements you want to create/update  
+        - You join the data with these elements  
+        - You change exisitng elements  
+        - Enter the selection to create new elements  
+        - Merge for updating both  
+        - Exit for removing elements  
+
+
+      %h3 Example
+
+      %a(class="jsbin-embed" href="http://jsbin.com/tovagekiqi/embed?js,output") D3 Selection on jsbin.com
+
+      = partial "partials/excercises", locals: {excercises: data.excercises.basic.data.excercises }
