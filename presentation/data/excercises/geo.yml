@@ -15,11 +15,37 @@ projection: &projection
       challenge: |
         Show a globe. With the geoOrthographic projection.
       solution: |
-        var projection = d3.d3.geoOrthographic();
+        var projection = d3.geoOrthographic();
     - title: Excercise
       bin: vutuxu
       challenge: |
         Rotate the globe. Tip: use setTimeout
+        solution: |
+          var geojson;
+          var yaw = 300;
+          function update() {
+            projection.rotate([yaw, -45])
+
+            u = map.selectAll('path')
+            .data(geojson.features);
+            u.enter()
+            .append('path')
+            .merge(u)
+            .attr('d', geoGenerator);
+            u.exit().remove()
+
+            gr = g.selectAll('path').data([graticule()])
+            gr.enter()
+            .append('path')
+            .merge(gr)
+            .attr('d', geoGenerator);
+            gr.exit().remove()
+            yaw -= 0.2
+          }
+          d3.json('http://enjalot.github.io/wwsd/data/world/world-110m.geojson', function(err, json) {
+            geojson = json;
+            window.setInterval(update, 100);
+          })
 
 interaction: &interaction
   title: Interaction
@@ -74,6 +100,7 @@ elements: &elements
       solution: |
         overlay.selectAll('path').data(points.features).enter().append('path').attr('d',geoGenerator)
 
+        //Bonus Solution
         overlay.selectAll('circle').data(points.features)
         .enter()
         .append("circle")
@@ -107,8 +134,28 @@ elements: &elements
       bin: tevivi
     - title: Excercise
       challenge: |
-        Fill the circles based on a value in the data
+        Fill the circles based on a value in the data.  
+        _Tip: Look at the challenges in the Basic section_
       bin: satupef
+      solution: |
+        var colors = d3.scaleOrdinal(d3.schemeCategory10);
+        overlay.selectAll('path')
+        .data(points.features).enter()
+        .append('path').attr('d',geoGenerator)
+        .attr("fill", function(d) { return colors(d.properties.NumStudents13)});
+        // alternative
+        overlay.selectAll('circle').data(points.features)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+          return projection(d.geometry.coordinates)[0];
+        })
+        .attr("cy", function(d) {
+          return projection(d.geometry.coordinates)[1];
+        })
+        .attr("r", 5)
+        .attr("fill", function(d) { return colors(d.properties.NumStudents13)});
+        .style("opacity", 0.75);
     - title: Excercise
       challenge: |
         Change the size of the circles based on a value in the data  

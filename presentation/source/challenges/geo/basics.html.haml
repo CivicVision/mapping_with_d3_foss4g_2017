@@ -11,9 +11,15 @@ title: Workshop Mapping with D3 - Challenges - D3 Geo - Basics
 
       %h2 How to create a simple (ugly) map.
       :markdown
-        Remember the `path` SVG element from the introduction? It will be useful here. What did we need to use again? Right, the `d` attribute. 
+        Remember the `path` SVG element from the introduction? It will be useful here. What did we need to use it again? Right, the `d` attribute.  
+        If you want to understand the `d` attribute in more detail take a look at the [Reference](https://www.w3schools.com/graphics/svg_path.asp)
+      :code
+        # lang: html
+        <path d="M150 0 L75 200 L225 200 Z"></path>
+
+      :markdown
         #### Introducing the first helper: geoPath
-        The `d3.geoPath()` helper function that given a GeoJSON geometry or feature object, generates an SVG path data string or renders the path to a Canvas.  
+        The `d3.geoPath()` helper function, given a GeoJSON geometry or feature object, generates an SVG path data string or renders the path to a Canvas.  
         [Reference](https://github.com/d3/d3-geo#paths)
 
       :code
@@ -28,6 +34,8 @@ title: Workshop Mapping with D3 - Challenges - D3 Geo - Basics
       :code
         #lang: js
         var point = { type: 'Point', coordinates: [42.3132882,-71.1972416]};
+        d3.select('svg').append('path').attr("d", d3.geoPath()(point));
+        //or
         d3.select('svg').append('path').datum(point).attr("d", d3.geoPath());
 
       :markdown
@@ -66,9 +74,9 @@ title: Workshop Mapping with D3 - Challenges - D3 Geo - Basics
         #lang: js
         var color = d3.scaleOrdinal(d3.schemeCategory10);
         color(1);
-        > #
+        > #1f77b4
         color(2);
-        > #
+        > #ff7f0e
 
       :markdown
         To read more about Color in d3 take a look [here](https://github.com/d3/d3-scale#category-scales)

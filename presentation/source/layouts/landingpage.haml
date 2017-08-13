@@ -13,7 +13,7 @@
     - else
       = stylesheet_link_tag 'leadpage', 'code'
     %link(rel="icon" href="/images/favicon.ico")
-    = javascript_include_tag  "https://code.jquery.com/jquery-2.1.4.min.js", "challenges", "http://static.jsbin.com/js/embed.min.js?4.0.4"
+    = javascript_include_tag  "//d3js.org/d3.v4.js", "//code.jquery.com/jquery-2.1.4.min.js", "challenges", "//static.jsbin.com/js/embed.min.js?4.0.4"
     = partial "partials/workshop_navigation"
     = partial "partials/analytics", locals: { drip_id: current_page.data.drip_id || '4828671', gtm_id: current_page.data.gtm_id || 'GTM-MTT6KM'}
   = yield

@@ -44,7 +44,7 @@ data: &data
         __Help:__
 
         r is the radius, cx is the x coordinate from the center and cy is the y coordinate from the center  
-        https://www.w3schools.com/graphics/svg_circle.asp
+        [SVG Circle](https://www.w3schools.com/graphics/svg_circle.asp)
       bin: cibokup
       solution: |
         var circles = d3.select('svg').selectAll('circle').data(data);
