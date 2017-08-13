@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Workshop Mapping with D3 - Challenges - D3 Basics</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" /><link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic|Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="../../../stylesheets/leadpage.css" rel="stylesheet" type="text/css" /><link href="../../../stylesheets/code.css" rel="stylesheet" type="text/css" />
+    <link href='/images/favicon.ico' rel='icon'>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script><script src="../../../javascripts/challenges.js" type="text/javascript"></script><script src="http://static.jsbin.com/js/embed.min.js?4.0.4" type="text/javascript"></script>
+    <div class='nav fixed'>
+      <div class='nav-content'>
+        <div class='logo-container'>
+          <a href="https://civicvision.de"><img alt="Civic Vision" height="30" class="logo" src="../../../images/logo_white.png" />
+          <h4>Open Data Consultancy for social good</h4>
+          </a>
+        </div>
+        <h2>Workshop - Mapping with d3</h2>
+        <ul class='nav-small'>
+          <li>
+            <a href="/presentation">Presentation</a>
+          </li>
+          <li>
+            <a href="/challenges/basics">D3 Basics</a>
+          </li>
+          <li>
+            <a href="/challenges/geo">D3 Mapping</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MTT6KM"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>
+      var _dcq = _dcq || [];
+      var _dcs = _dcs || {};
+      _dcs.account = "4828671";
+      (function() {
+      	var dc = document.createElement('script');
+      	dc.type = 'text/javascript'; dc.async = true;
+      	dc.src = "//tag.getdrip.com/4828671.js";
+      	var s = document.getElementsByTagName('script')[0];
+      	s.parentNode.insertBefore(dc, s);
+      })();
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',"GTM-MTT6KM");
+    </script>
+  </head>
+  <div class='login-required'></div>
+  <div id='landingpage'>
+    <section class='sub-heading'>
+      <div class='content-wrapper'>
+        <h1>Basics</h1>
+        <h2>Adding or removing elements</h2>
+        <pre class="highlight javascript"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">enter</span><span class="p">()</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">exit</span><span class="p">()</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">)</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">exit</span><span class="p">().</span><span class="nx">remove</span><span class="p">()</span>&#x000A;&#x000A;</code></pre>
+        <p>This is the toughest part to grasp. But it is very important one for d3.</p>
+        
+        <p>The concept is as follows:</p>
+        
+        <ul>
+        <li>You select elements you want to create/update<br></li>
+        <li>You join the data with these elements<br></li>
+        <li>You change exisitng elements<br></li>
+        <li>Enter the selection to create new elements<br></li>
+        <li>Merge for updating both<br></li>
+        <li>Exit for removing elements<br></li>
+        </ul>
+        <h3>Example</h3>
+        <a class='jsbin-embed' href='http://jsbin.com/tovagekiqi/embed?js,output'>D3 Selection on jsbin.com</a>
+        <h3>Excercise 1</h3>
+        <p>Create a list with names from the data.</p>
+        <a class='jsbin-embed' href='http://jsbin.com/wulitep/embed?html,js,output'>Challenge</a>
+        <a class='show-solution' data-id='solution-0' href='javascript:;'>Show solution</a>
+        <div class='solution hidden' id='solution-0'>
+          <pre class="highlight javascript"><code>&#x000A;<span class="kd">var</span> <span class="nx">lis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">'ul.names'</span><span class="p">).</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'li'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>&#x000A;<span class="nx">lis</span><span class="p">.</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'li'</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">lis</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="p">(</span><span class="s2">"Name: "</span><span class="o">+</span><span class="nx">d</span><span class="p">.</span><span class="nx">name</span><span class="o">+</span><span class="s2">" ("</span><span class="o">+</span><span class="nx">d</span><span class="p">.</span><span class="nx">gender</span><span class="o">+</span><span class="s2">"), "</span><span class="o">+</span><span class="nx">d</span><span class="p">.</span><span class="nx">age</span><span class="p">);</span> &#x000A;<span class="p">});</span>&#x000A;&#x000A;</code></pre>
+        </div>
+        <h3>Excercise 2</h3>
+        <p>Create <strong>three</strong> circles which don&#39;t overlap. Fill the existing one with green and the rest red.  </p>
+        
+        <p><strong>Help:</strong></p>
+        
+        <p>r is the radius, cx is the x coordinate from the center and cy is the y coordinate from the center<br>
+        https://www.w3schools.com/graphics/svg_circle.asp</p>
+        <a class='jsbin-embed' href='http://jsbin.com/cibokup/embed?html,js,output'>Challenge</a>
+        <a class='show-solution' data-id='solution-1' href='javascript:;'>Show solution</a>
+        <div class='solution hidden' id='solution-1'>
+          <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">circles</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">'svg'</span><span class="p">).</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>&#x000A;<span class="nx">circles</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'fill'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>&#x000A;<span class="nx">circles</span><span class="p">.</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'fill'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">circles</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'cx'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">;})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'cy'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">10</span><span class="o">*</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'r'</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>&#x000A;&#x000A;</code></pre>
+        </div>
+      </div>
+    </section>
+  </div>
+</html>

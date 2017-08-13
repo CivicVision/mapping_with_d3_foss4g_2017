@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Workshop Mapping with D3 - Challenges - D3 Geo - Elements</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" /><link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic|Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="../../../stylesheets/leadpage.css" rel="stylesheet" type="text/css" /><link href="../../../stylesheets/code.css" rel="stylesheet" type="text/css" />
+    <link href='/images/favicon.ico' rel='icon'>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script><script src="../../../javascripts/challenges.js" type="text/javascript"></script><script src="http://static.jsbin.com/js/embed.min.js?4.0.4" type="text/javascript"></script>
+    <div class='nav fixed'>
+      <div class='nav-content'>
+        <div class='logo-container'>
+          <a href="https://civicvision.de"><img alt="Civic Vision" height="30" class="logo" src="../../../images/logo_white.png" />
+          <h4>Open Data Consultancy for social good</h4>
+          </a>
+        </div>
+        <h2>Workshop - Mapping with d3</h2>
+        <ul class='nav-small'>
+          <li>
+            <a href="/presentation">Presentation</a>
+          </li>
+          <li>
+            <a href="/challenges/basics">D3 Basics</a>
+          </li>
+          <li>
+            <a href="/challenges/geo">D3 Mapping</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MTT6KM"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>
+      var _dcq = _dcq || [];
+      var _dcs = _dcs || {};
+      _dcs.account = "4828671";
+      (function() {
+      	var dc = document.createElement('script');
+      	dc.type = 'text/javascript'; dc.async = true;
+      	dc.src = "//tag.getdrip.com/4828671.js";
+      	var s = document.getElementsByTagName('script')[0];
+      	s.parentNode.insertBefore(dc, s);
+      })();
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',"GTM-MTT6KM");
+    </script>
+  </head>
+  <div class='login-required'></div>
+  <div id='landingpage'>
+    <section class='sub-heading'>
+      <div class='content-wrapper'>
+        <h1>Add Elements to a map</h1>
+        <p>You can add almost every element to the map. As long as you have coordinates where to put it. As demostranted in the <a href="#">Basic</a> sectionm the <code>d3.geoPath</code> can create a path for every GeoJSON object. </p>
+        
+        <p>To create a point on a map we simply create a Point GeoJSON object and pass it to the geoPath.</p>
+        
+        <p><a href="https://github.com/d3/d3-geo#paths">Reference</a></p>
+        <a class='jsbin-embed' href='http://jsbin.com/moviyan/embed?js,output'>D3 Selection on jsbin.com</a>
+        <p>For path elements you can change the radius for Point and MultiPoint geometries with <code>d3.geoPath().pointRadius()</code></p>
+        <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">geoGenerator</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geoPath</span><span class="p">()</span>&#x000A;  <span class="p">.</span><span class="nx">projection</span><span class="p">(</span><span class="nx">projection</span><span class="p">).</span><span class="nx">pointRadius</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>&#x000A;</code></pre>
+        <h3>Excercise 1</h3>
+        <p>Add circles to the map with the data provided. Bonus: Use <code>circle</code> instead of <code>path</code></p>
+        <a class='jsbin-embed' href='http://jsbin.com/noyiluj/embed?html,js,output'>Challenge</a>
+        <a class='show-solution' data-id='solution-0' href='javascript:;'>Show solution</a>
+        <div class='solution hidden' id='solution-0'>
+          <pre class="highlight javascript"><code><span class="nx">overlay</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'path'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">points</span><span class="p">.</span><span class="nx">features</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'path'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'d'</span><span class="p">,</span><span class="nx">geoGenerator</span><span class="p">)</span>&#x000A;&#x000A;<span class="nx">overlay</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">points</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">enter</span><span class="p">()</span>&#x000A;<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"circle"</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"cx"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="nx">projection</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>&#x000A;<span class="p">})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"cy"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="nx">projection</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>&#x000A;<span class="p">})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>&#x000A;<span class="c1">//alternative</span>&#x000A;<span class="nx">overlay</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'g'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">points</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">enter</span><span class="p">()</span>&#x000A;<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"g"</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'transform'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="s1">'translate('</span><span class="o">+</span><span class="nx">projection</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">)</span><span class="o">+</span><span class="s1">')'</span><span class="p">;</span>&#x000A;<span class="p">})</span>&#x000A;<span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'r'</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>&#x000A;&#x000A;</code></pre>
+        </div>
+        <h3>Excercise 2</h3>
+        <p>Add a line to the map with the data provided.<br>
+        Tip: Add a color to the line to actual see it (stroke attribute)</p>
+        <a class='jsbin-embed' href='http://jsbin.com/tevivi/embed?html,js,output'>Challenge</a>
+        <a class='show-solution' data-id='solution-1' href='javascript:;'>Show solution</a>
+        <div class='solution hidden' id='solution-1'>
+          <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">line</span> <span class="o">=</span> <span class="p">{</span><span class="na">type</span><span class="p">:</span> <span class="s1">'Feature'</span><span class="p">,</span> <span class="na">geometry</span><span class="p">:</span> <span class="p">{</span><span class="na">type</span><span class="p">:</span> <span class="s1">'LineString'</span><span class="p">,</span> &#x000A;                                        <span class="na">coordinates</span><span class="p">:</span> <span class="p">[</span><span class="nx">harvard</span><span class="p">,</span> <span class="nx">seaport</span><span class="p">]}};</span>&#x000A;<span class="nx">overlay</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'path'</span><span class="p">).</span><span class="nx">data</span><span class="p">([</span><span class="nx">line</span><span class="p">]).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'path'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'d'</span><span class="p">,</span><span class="nx">geoGenerator</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'stroke'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">)</span>&#x000A;<span class="c1">//alternative</span>&#x000A;<span class="nx">overlay</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'path'</span><span class="p">).</span><span class="nx">datum</span><span class="p">(</span><span class="nx">line</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'d'</span><span class="p">,</span><span class="nx">geoGenerator</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'stroke'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">)</span>&#x000A;&#x000A;</code></pre>
+        </div>
+        <h3>Excercise 3</h3>
+        <p>Fill the circles based on a value in the data</p>
+        <a class='jsbin-embed' href='http://jsbin.com/satupef/embed?html,js,output'>Challenge</a>
+        <a class='show-solution' data-id='solution-2' href='javascript:;'>Show solution</a>
+        <div class='solution hidden' id='solution-2'>
+          <pre class="highlight javascript"><code>&#x000A;</code></pre>
+        </div>
+        <h3>Excercise 4</h3>
+        <p>Change the size of the circles based on a value in the data<br>
+        Tip: you might want to use <code>circle</code> instead of path<br>
+        Read: <a href="https://medium.com/@mbostock/introducing-d3-scale-61980c51545f">Scales</a></p>
+        <a class='jsbin-embed' href='http://jsbin.com/satupef/embed?html,js,output'>Challenge</a>
+        <a class='show-solution' data-id='solution-3' href='javascript:;'>Show solution</a>
+        <div class='solution hidden' id='solution-3'>
+          <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">extent</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">extent</span><span class="p">(</span><span class="nx">points</span><span class="p">.</span><span class="nx">features</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">NumStudents13</span><span class="p">;});</span>&#x000A;<span class="kd">var</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scaleLinear</span><span class="p">().</span><span class="nx">domain</span><span class="p">(</span><span class="nx">extent</span><span class="p">).</span><span class="nx">range</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">]);</span>&#x000A;&#x000A;<span class="nx">overlay</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'g'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">points</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">enter</span><span class="p">()</span>&#x000A;<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"g"</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'transform'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="s1">'translate('</span><span class="o">+</span><span class="nx">projection</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">)</span><span class="o">+</span><span class="s1">')'</span><span class="p">;</span>&#x000A;<span class="p">})</span>&#x000A;<span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'r'</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">scale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">NumStudents13</span><span class="p">);})</span>&#x000A;<span class="c1">//alternative</span>&#x000A;<span class="nx">overlay</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">points</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">enter</span><span class="p">()</span>&#x000A;<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"circle"</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"cx"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="nx">projection</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>&#x000A;<span class="p">})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"cy"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>&#x000A;  <span class="k">return</span> <span class="nx">projection</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>&#x000A;<span class="p">})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'r'</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">scale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">NumStudents13</span><span class="p">);})</span>&#x000A;<span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>&#x000A;&#x000A;</code></pre>
+        </div>
+        <a class="cta-btn" href="/challenges/geo/interactions">Next challenge</a>
+      </div>
+    </section>
+  </div>
+</html>
