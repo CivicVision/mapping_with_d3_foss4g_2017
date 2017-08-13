@@ -60,5 +60,19 @@ title: Workshop Mapping with D3 - Challenges - D3 Geo - Basics
         #### Where do I find good colors?
         Check out [Colorbrewer](colorbrewer2.org). An awesome tool and it can generate javascript arrays for you :)
 
+        Or use d3 internal color tools. It will create a method which returns 10 colors. It uses a Scale internally. 
+
+      :code
+        #lang: js
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+        color(1);
+        > #
+        color(2);
+        > #
+
+      :markdown
+        To read more about Color in d3 take a look [here](https://github.com/d3/d3-scale#category-scales)
+        And learn more about scale look no [further]()
+
       = partial "partials/excercises", locals: {excercises: data.excercises.geo.basic.excercises }
       = link_to "Next challenge", "/challenges/geo/projections", class: 'cta-btn'

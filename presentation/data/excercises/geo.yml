@@ -3,12 +3,21 @@ projection: &projection
   url: projections
   excercises:
     - title: Excercise
+      bin: vutuxu
       challenge: |
         Change the map to a different projection.
+      solution: |
+        var projection = d3.geoMercator();
+        var projection = d3.geoGnomonic();
+        var projection = d3.geoEquirectangular();
     - title: Excercise
+      bin: vutuxu
       challenge: |
         Show a globe. With the geoOrthographic projection.
+      solution: |
+        var projection = d3.d3.geoOrthographic();
     - title: Excercise
+      bin: vutuxu
       challenge: |
         Rotate the globe. Tip: use setTimeout
 
@@ -104,7 +113,7 @@ elements: &elements
       challenge: |
         Change the size of the circles based on a value in the data  
         Tip: you might want to use `circle` instead of path  
-        Read: [Scales]()
+        Read: [Scales](https://medium.com/@mbostock/introducing-d3-scale-61980c51545f)
       bin: satupef
       solution: |
         var extent = d3.extent(points.features, function(d) { return d.properties.NumStudents13;});
@@ -134,7 +143,7 @@ elements: &elements
 
 
 basic: &basic
-  title: Bascis
+  title: Basics
   url: basics
   reading_list:
     - title: D3 Geo API Reference
@@ -144,12 +153,6 @@ basic: &basic
     - title: "Chapter 7. Scales"
       url: http://chimera.labs.oreilly.com/books/1230000000345/ch07.html
   excercises:
-    - title: Excercise
-      challenge: |
-        Use topojson to create a map
-    - title: Excercise
-      challenge: |
-        Use a csv file to create a map
     - title: Excercise
       challenge: |
         Fill the polygons with a color of your choice
@@ -197,6 +200,34 @@ basic: &basic
               return c(d.properties.YrBltRmd_n);
             });
           })
+    - title: Excercise
+      bin: lisavow
+      challenge: |
+        Use topojson to create a map
+      solution: |
+        overlay.append('path')
+        .attr('d',geoGenerator(topojson.feature(points, points.objects.SnowParking)))
+        //or
+        overlay.append('path').datum(topojson.feature(points, points.objects.SnowParking))
+        .attr('d',geoGenerator)
+        //or 
+        overlay.selectAll('path').data(topojson.feature(points, points.objects.SnowParking).features)
+        .enter()
+        .append("path")
+        .attr('d',geoGenerator)
+
+    - title: Excercise
+      bin: tahizuf
+      challenge: |
+        Use a csv file to create a map
+      solution: |
+        overlay.selectAll('path').data(points)
+        .enter()
+        .append("path")
+        .attr('d', function(d) {
+          return point({ type: "Point", coordinates: [d.X,d.Y]});
+        })
+
 
 structure:
   - *basic
