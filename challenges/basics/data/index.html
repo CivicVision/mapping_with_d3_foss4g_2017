@@ -7,7 +7,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" /><link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic|Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="/mapping_with_d3_foss4g_2017/stylesheets/leadpage.css" rel="stylesheet" type="text/css" /><link href="/mapping_with_d3_foss4g_2017/stylesheets/code.css" rel="stylesheet" type="text/css" />
     <link href='/images/favicon.ico' rel='icon'>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script><script src="/mapping_with_d3_foss4g_2017/javascripts/challenges.js" type="text/javascript"></script><script src="http://static.jsbin.com/js/embed.min.js?4.0.4" type="text/javascript"></script>
+    <script src="//d3js.org/d3.v4.js" type="text/javascript"></script><script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script><script src="/mapping_with_d3_foss4g_2017/javascripts/challenges.js" type="text/javascript"></script><script src="//static.jsbin.com/js/embed.min.js?4.0.4" type="text/javascript"></script>
     <div class='nav fixed'>
       <div class='nav-content'>
         <div class='logo-container'>
@@ -54,20 +54,24 @@
     <section class='sub-heading'>
       <div class='content-wrapper'>
         <h1>Basics</h1>
-        <h2>Adding or removing elements</h2>
-        <pre class="highlight javascript"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">enter</span><span class="p">()</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">exit</span><span class="p">()</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">)</span>&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">exit</span><span class="p">().</span><span class="nx">remove</span><span class="p">()</span>&#x000A;&#x000A;</code></pre>
+        <h2>Data Joins</h2>
+        <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">h1</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">data</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>&#x000A;<span class="nx">h1</span><span class="p">.</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">merge</span><span class="p">(</span><span class="nx">h1</span><span class="p">)</span>&#x000A;<span class="nx">h1</span><span class="p">.</span><span class="nx">exit</span><span class="p">().</span><span class="nx">remove</span><span class="p">()</span>&#x000A;&#x000A;<span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">).</span><span class="nx">datum</span><span class="p">({</span><span class="na">title</span><span class="p">:</span> <span class="s1">'Test'</span><span class="p">})</span>&#x000A;&#x000A;</code></pre>
         <p>This is the toughest part to grasp. But it is very important one for d3.</p>
         
-        <p>The concept is as follows:</p>
+        <p>Using <code>data</code> for multiple joins or <code>datum</code> for a single join will add a <code>__data__</code> property to that element. Use the Inspector of your browser to see it in action.</p>
+        
+        <p>To create new elements that do not exist or update existing one the flow is the following:</p>
         
         <ul>
         <li>You select elements you want to create/update<br></li>
         <li>You join the data with these elements<br></li>
-        <li>You change exisitng elements<br></li>
+        <li>You change existing elements<br></li>
         <li>Enter the selection to create new elements<br></li>
         <li>Merge for updating both<br></li>
         <li>Exit for removing elements<br></li>
         </ul>
+        
+        <p>More in the [presentation]</p>
         <h3>Example</h3>
         <a class='jsbin-embed' href='http://jsbin.com/tovagekiqi/embed?js,output'>D3 Selection on jsbin.com</a>
         <h3>Excercise 1</h3>
@@ -83,12 +87,13 @@
         <p><strong>Help:</strong></p>
         
         <p>r is the radius, cx is the x coordinate from the center and cy is the y coordinate from the center<br>
-        https://www.w3schools.com/graphics/svg_circle.asp</p>
+        <a href="https://www.w3schools.com/graphics/svg_circle.asp">SVG Circle</a></p>
         <a class='jsbin-embed' href='http://jsbin.com/cibokup/embed?html,js,output'>Challenge</a>
         <a class='show-solution' data-id='solution-1' href='javascript:;'>Show solution</a>
         <div class='solution hidden' id='solution-1'>
           <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">circles</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">'svg'</span><span class="p">).</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>&#x000A;<span class="nx">circles</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'fill'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>&#x000A;<span class="nx">circles</span><span class="p">.</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'circle'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'fill'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">circles</span><span class="p">)</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'cx'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">;})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'cy'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">10</span><span class="o">*</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);})</span>&#x000A;<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'r'</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>&#x000A;&#x000A;</code></pre>
         </div>
+        <a class="cta-btn" href="/mapping_with_d3_foss4g_2017/challenges/geo/">Next (Mapping)</a>
       </div>
     </section>
   </div>

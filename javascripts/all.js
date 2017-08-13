@@ -6689,7 +6689,7 @@ if (typeof exports === 'object') {
     if (window.drip.currentVisitor.email) {
       return window.trackEvent('Visited - Logged in - ' + document.title, {});
     } else {
-      return window.location = '/challenges?l=f';
+      return window.location = '/mapping_with_d3_foss4g_2017/challenges?l=f';
     }
   };
 
@@ -6698,7 +6698,7 @@ if (typeof exports === 'object') {
       if (window.drip) {
         return window.drip.addCallback(window.isLoggedIn);
       } else {
-        return window.location = '/challenges?l=f';
+        return window.location = '/mapping_with_d3_foss4g_2017/challenges?l=f';
       }
     }
   });
