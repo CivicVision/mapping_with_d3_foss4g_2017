@@ -23,7 +23,7 @@ projection: &projection
 
 interaction: &interaction
   title: Interaction
-  url: interaction
+  url: interactions
   excercises:
     - title: Excercise
       bin: tevivi
